@@ -17,7 +17,7 @@ const LoginPage = () => {
     try {
       const res = await login(email, password);
       if (res.success) {
-        router.push("/");
+        router.push("/dashboard");
       } else {
         alert(res.error);
       }
