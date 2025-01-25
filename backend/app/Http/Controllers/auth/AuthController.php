@@ -17,13 +17,27 @@ class AuthController extends Controller
             return response()->json(["error" => "invalid credentials", "success" => false]);
         }
 
-        return response()->json(["message" => "Success xixixxi", "success" => true, "token" => $token, 'user' => Auth::user()]);
+
+        $cookies = cookie(
+            'token',
+            $token,
+            45,
+            '/',
+            null,
+            false,
+            true,
+            false,
+            'strict'
+        );
+
+        return response()->json(["message" => "Success xixixxi", "success" => true, "token" => $token, 'user' => Auth::user()])->cookie($cookies);
     }
 
     function logout()
     {
         Auth::logout();
-        return response()->json(['message' => 'Successfully logged out']);
+        $cookies = cookie('token', '', -1);
+        return response()->json(['message' => 'Successfully logged out'])->cookie($cookies);
     }
 
     function me()
