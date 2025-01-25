@@ -21,6 +21,6 @@ class UserController extends Controller
 
     function getTeamRole()
     {
-        return User::whereNull('deleted_at')->where(["role_id", '=', "2"])->get();
+        return User::whereNull('deleted_at')->where("role_id", 2)->get();
     }
 }

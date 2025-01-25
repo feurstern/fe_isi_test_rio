@@ -1,5 +1,5 @@
 import api from "../utils/api";
-
+import { TaskPayload } from "../models";
 export const taskList = async () => {
   try {
     const res = await api.get("/task/list");
@@ -9,12 +9,38 @@ export const taskList = async () => {
   }
 };
 
-export const taskDelete = async (id: string) => {
+export const taskSubmit = async (data: TaskPayload) => {
   try {
-    const res = await api.post(`/tast/delete/${id}`);
+    const res = await api.post("/task/create", data);
+    return res.data;
+  } catch (error) {
+    console.log("error during inserting the data", error);
+  }
+};
 
+export const taskDelete = async (id: number) => {
+  try {
+    const res = await api.post(`/task/delete/${id}`);
     return res.data;
   } catch (error) {
     console.log("error during deleting thee task", error);
+  }
+};
+
+export const taskUpdate = async (id: number, newData: TaskPayload) => {
+  try {
+    const res = await api.post(`/task/update/${id}`, newData);
+    return res.data;
+  } catch (error) {
+    console.log("error during updating the data,", error);
+  }
+};
+
+export const teamList = async () => {
+  try {
+    const res = await api.get("/user/team-role");
+    return res.data;
+  } catch (error) {
+    console.log("error during retrieving the user taeam data", error);
   }
 };

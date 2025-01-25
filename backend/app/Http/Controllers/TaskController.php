@@ -35,6 +35,7 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request)
     {
         $data  = $request->all();
+
         // $user  = Auth::user();
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -42,15 +43,18 @@ class TaskController extends Controller
             return response()->json(["message" => "invalid credentialss"]);
         }
 
-        // dd($user->id);
+        // dd($data);
 
         $task = new Task();
 
         $task->title = $data['title'];
         $task->description = $data['description'];
         $task->status_id = $data['status_id'];
-        $task->create_by = $user->id;
+        $task->create_by =  $user->id;
         $task->assigned_to = $data['assigned_to'];
+        $task->update_by = null;
+        $task->deleted_at = null;
+        $task->delete_by = null;
         $task->created_at = now();
 
         $save = $task->save();
@@ -110,7 +114,7 @@ class TaskController extends Controller
         $data = Task::find($id);
         $user = JWTAuth::parseToken()->authenticate();
         // dd($user);
-        
+
         if (!$data) {
             return response()->json(["message" => "Data not found", "success" => false]);
         }
