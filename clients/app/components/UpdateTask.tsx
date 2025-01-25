@@ -1,75 +1,80 @@
-"use client";
 import React, { useEffect, useState } from "react";
-import { progress } from "../constant";
-import { teamList, taskSubmit } from "../services/api";
 import { Task, Team } from "../models";
+import { progress } from "../constant";
+import { teamList, taskUpdate } from "../services/api";
 
-type createTaskModalProps = {
+type updateTaskModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onNewTaskProps: (task: Task) => void;
+  selectedTaskDataProps: Task | null;
+  onUpdateTaskProps: (id: number, task: Task) => void;
 };
 
-const AddTask: React.FC<createTaskModalProps> = ({
+const UpdateTask: React.FC<updateTaskModalProps> = ({
   isOpen,
+  selectedTaskDataProps,
   onClose,
-  onNewTaskProps,
+  onUpdateTaskProps,
 }) => {
-  if (!isOpen) return null;
+  if (!isOpen || !selectedTaskDataProps) return null;
 
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(selectedTaskDataProps?.title);
+  const [taskId, setTaskId] = useState(selectedTaskDataProps.id);
   const [team, setTeam] = useState<Team[]>([]);
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("");
-  const [assignedTo, setAssignedTo] = useState("");
+  const [description, setDescription] = useState(
+    selectedTaskDataProps?.description
+  );
+  const [status, setStatus] = useState(selectedTaskDataProps?.status_id);
+  const [assignedTo, setAssignedTo] = useState(
+    selectedTaskDataProps.assigned_to
+  );
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const id: string = user?.user?.id;
+  const userId = user.user.id;
 
   const fetchTeamList = async () => {
     try {
-      const team = await teamList();
-      setTeam(team || []);
-    } catch (error) {}
+      const res = await teamList();
+      console.log("res", res);
+
+      setTeam(res || []);
+    } catch (error) {
+      console.log("error during fetching the team list", error);
+    }
   };
 
   useEffect(() => {
     fetchTeamList();
   }, []);
 
-  
-
-  const submitData = async (e: React.FormEvent) => {
+  const handleUpdateTask = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const payload = {
-        id: id,
+        id: userId,
         title: title,
         description: description,
-        status_id: status,
-        assigned_to: assignedTo,
+        status_id: status.toString(),
+        assigned_to: assignedTo.toString(),
       };
-      const res = await taskSubmit(payload);
-
-      console.log("payload", payload);
+      const res = await taskUpdate(taskId, payload);
       if (res.success) {
-        alert("data has been submitted succesfully");
-        onNewTaskProps(res.data);
+        alert(res.message);
+        onUpdateTaskProps(taskId, res.data);
         onClose();
-      } else {
-        alert("eerorr!");
       }
-    } catch (error) {
-      console.log("error during submitting the daata", error);
-    }
+    } catch (error) {}
+
+    // console.log("update payload", payload);
   };
+  //   console.log("team", team);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-lg font-bold mb-4">Create New Task</h2>
+        <h2 className="text-lg font-bold mb-4">Update New Task </h2>
 
-        <form onSubmit={submitData}>
+        <form onSubmit={handleUpdateTask}>
           <div className="mb-4">
             <label htmlFor="taskTitle" className="block font-medium mb-1">
               Task Title
@@ -99,7 +104,10 @@ const AddTask: React.FC<createTaskModalProps> = ({
             <label htmlFor="progressStatus" className="block font-medium mb-1">
               Progress Status :
             </label>
-            <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <select
+              value={status}
+              onChange={(e) => setStatus(Number(e.target.value))}
+            >
               <option disabled>select</option>
               {progress.map((x, i) => (
                 <option key={`${i}`} value={`${x.id}`}>
@@ -114,7 +122,7 @@ const AddTask: React.FC<createTaskModalProps> = ({
             </label>
             <select
               value={assignedTo}
-              onChange={(e) => setAssignedTo(e.target.value)}
+              onChange={(e) => setAssignedTo(Number(e.target.value))}
             >
               <option value="" disabled>
                 select
@@ -138,7 +146,7 @@ const AddTask: React.FC<createTaskModalProps> = ({
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-lg"
             >
-              Create
+              Update
             </button>
           </div>
         </form>
@@ -147,4 +155,4 @@ const AddTask: React.FC<createTaskModalProps> = ({
   );
 };
 
-export default AddTask;
+export default UpdateTask;

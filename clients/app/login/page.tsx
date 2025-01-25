@@ -44,6 +44,7 @@ const LoginPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
               placeholder="hitler@nsdap.de"
+              required
             />
           </div>
 
@@ -53,6 +54,7 @@ const LoginPage = () => {
             </label>
             <input
               value={password}
+              required
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"

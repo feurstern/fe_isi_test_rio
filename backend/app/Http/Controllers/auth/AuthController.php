@@ -16,8 +16,7 @@ class AuthController extends Controller
         if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json(["error" => "invalid credentials", "success" => false]);
         }
-
-
+                
         $cookies = cookie(
             'token',
             $token,
