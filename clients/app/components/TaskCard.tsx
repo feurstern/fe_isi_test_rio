@@ -37,6 +37,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
           <p className="text-sm text-gray-500">
             Created At: {new Date(task.created_at).toLocaleDateString()}
           </p>
+        
           <div className="mt-4 flex space-x-4">
             <button
               onClick={() => onEdit(task.id)}
