@@ -57,6 +57,7 @@ const UpdateTask: React.FC<updateTaskModalProps> = ({
         status_id: status.toString(),
         assigned_to: assignedTo.toString(),
       };
+      alert('clicked')
       const res = await taskUpdate(taskId, payload);
       if (res.success) {
         alert(res.message);

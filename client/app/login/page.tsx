@@ -10,7 +10,6 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const url = process.env.BASE_URL;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +21,7 @@ const LoginPage = () => {
         alert(res.error);
       }
     } catch (error: any) {
-      setError(error.message);
+      alert("failed");
     }
   };
 
