@@ -7,8 +7,9 @@ import { TaskCard, Navbar, AddTask, UpdateTask } from "../components";
 import { useRouter } from "next/navigation";
 
 const TasksPage = () => {
-  const user = JSON.parse(localStorage.getItem("users") || "{}");
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
   const router = useRouter();
+
   if (!user || Object.keys(user).length === 0) {
     return router.push("/login");
   }

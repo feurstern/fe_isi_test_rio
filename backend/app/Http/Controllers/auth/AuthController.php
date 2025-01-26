@@ -16,7 +16,7 @@ class AuthController extends Controller
         if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json(["error" => "invalid credentials", "success" => false]);
         }
-                
+
         $cookies = cookie(
             'token',
             $token,
@@ -36,7 +36,7 @@ class AuthController extends Controller
     {
         Auth::logout();
         $cookies = cookie('token', '', -1);
-        return response()->json(['message' => 'Successfully logged out'])->cookie($cookies);
+        return response()->json(["success" => true, 'message' => 'Successfully logged out'])->cookie($cookies);
     }
 
     function me()
