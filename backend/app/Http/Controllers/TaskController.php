@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Models\TaskLog;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\JWT;
 
@@ -18,7 +19,24 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return  Task::whereNull("deleted_at")->get();
+        return  DB::table('tasks as t')
+            ->leftJoin('users as u1', 'u1.id', '=', 't.create_by')
+            ->leftJoin('users as u2', 'u2.id', '=', 't.assigned_to')
+            ->leftJoin('users as u3', 'u3.id', '=', 't.update_by')
+            ->leftJoin('statuses as s', "s.id", "=", "t.status_id")
+            ->select(
+                't.id as id',
+                't.title as title',
+                't.description as description',
+                'u1.name as created_by_name',
+                'u2.name as assigned_to_name',
+                'u3.name as updated_by_name',
+                "s.name as status",
+                't.created_at as created_at',
+                't.updated_at as updated_at',
+            )
+            ->whereNull('t.deleted_at')
+            ->get();
     }
 
     /**
@@ -86,7 +104,6 @@ class TaskController extends Controller
 
         // dd($newData);
         $user = JWTAuth::parseToken()->authenticate();
-
 
         if (!$oldData) {
             return response()->json(["status" => false, "message" =>  "data not found"]);

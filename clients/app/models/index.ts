@@ -12,6 +12,20 @@ export type Task = {
   deleted_at: string | null;
 };
 
+export type TaskList = {
+  id: number;
+  title: string;
+  description: string;
+  status: string;
+  create_by_nane: string;
+  create_by: number;
+  update_by: number | null;
+  delete_by: number | null;
+  assigned_to_name: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export type Team = {
   id: number;
   name: string;
