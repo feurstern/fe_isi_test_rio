@@ -14,6 +14,10 @@ const TasksPage = () => {
     return router.push("/login");
   }
 
+  const role = user?.user?.role_id;
+
+  console.log("curreent roel", role);
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,7 +49,7 @@ const TasksPage = () => {
     setSelectedId(taskId);
   };
 
-  console.log("selectedId", selectedId);
+  // console.log("selectedId", selectedId);
 
   const checkStatus = (statusId: number): string => {
     return statusId == 1
@@ -126,12 +130,18 @@ const TasksPage = () => {
         <h1 className="text-2xl font-bold mb-6">
           Task List {isCreateModalOpened}
         </h1>
-        <button
-          onClick={handleOpenModal}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow"
-        >
-          Create New Task
-        </button>
+
+        {role == 1 ? (
+          <button
+            onClick={handleOpenModal}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow"
+          >
+            Create New Task
+          </button>
+        ) : (
+          ""
+        )}
+
         {loading ? (
           <p>Loading tasks...</p>
         ) : tasks.length === 0 ? (
