@@ -22,5 +22,6 @@ Route::middleware(['auth:api', 'throttle:60,1'])->prefix("user")->group(function
     Route::get("/team-role", [UserController::class, "getTeamRole"])->name('user.team-role');
 });
 
-Route::post("/login", [AuthController::class, 'login']);
+Route::post("/login", [AuthController::class, 'login'])->name("login");
+Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 Route::get("/create", [UserController::class, "create"]);

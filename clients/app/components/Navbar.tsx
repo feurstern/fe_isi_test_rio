@@ -1,11 +1,26 @@
 import React from "react";
+import { logout } from "../services/auth";
+import { useRouter } from "next/navigation";
 const Navbar = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  
-  const username = user != "{}" ? user?.user?.name : "-";
-  console.log("username", user);
 
-  const handleLogout = async () => {};
+  const username =
+    !user || Object.keys(user).length === 0 ? "-" : user?.user?.name;
+  // console.log("user", username);
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      const res = await logout();
+
+      if (res.success) {
+        alert("success to logout!");
+        router.push("/login");
+      }
+    } catch (error) {
+      alert(`Error when trying logout: ${error}`);
+    }
+  };
 
   return (
     <nav className=" w-full max-w-screen-lg px-4 py-2 mx-auto bg-white shadow-md rounded-md lg:px-8 lg:py-3 mt-10">
@@ -41,7 +56,10 @@ const Navbar = () => {
             </li>
 
             <li className="flex items-center p-1 text-sm gap-x-2 text-slate-600">
-              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg flex items-center">
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg flex items-center"
+              >
                 Logout
               </button>
             </li>

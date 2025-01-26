@@ -27,6 +27,7 @@ export const taskDelete = async (id: number) => {
   }
 };
 
+
 export const taskUpdate = async (id: number, newData: TaskPayload) => {
   try {
     const res = await api.post(`/task/update/${id}`, newData);
