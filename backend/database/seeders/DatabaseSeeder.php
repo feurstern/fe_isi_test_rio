@@ -15,13 +15,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            // RoleSeeder::class,
-            // StatusSeeder::class,
-            // UserSeeder::class,
+            RoleSeeder::class,
+            StatusSeeder::class,
+            UserSeeder::class,
         ]);
-    // User::factory(5)->create();
+        
+        User::factory(5)->create();
 
-        // Task::factory(15)->create();
+        Task::factory(15)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',

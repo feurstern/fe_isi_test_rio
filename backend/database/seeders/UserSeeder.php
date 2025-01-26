@@ -16,6 +16,14 @@ class UserSeeder extends Seeder
     {
         $main_user = ([
             [
+                "name" => "Hatsune Miku",
+                "email" => "mikumiku@vocaloid.jp",
+                "password" => Hash::make("password123!"),
+                "role_id" => 1,
+                "email_verified_at" => now(),
+                "created_at" => now(),
+            ],
+            [
                 "name" => "Yuukirin",
                 "email" => "yuki@gmail.com",
                 "password" => Hash::make("Yuukirinkawaii123!"),
