@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         ]);
     // User::factory(5)->create();
 
-        Task::factory(15)->create();
+        // Task::factory(15)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',
