@@ -13,7 +13,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        //
+        return Status::whereNull('deleted_at')->get();
     }
 
     /**

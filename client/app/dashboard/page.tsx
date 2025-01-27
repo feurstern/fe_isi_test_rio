@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { taskList, taskDelete } from "../services/api";
-import { Task } from "../models";
+import { Task, TaskList } from "../models";
 import { TaskCard, Navbar, AddTask, UpdateTask } from "../components";
 import { useRouter } from "next/navigation";
 
@@ -16,15 +16,15 @@ const TasksPage = () => {
 
   const role = user?.user?.role_id;
 
-  console.log("curreent roel", role);
+  // console.log("curreent roel", role);
 
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<TaskList[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [isCreateModalOpened, setIsCreateModalOpened] = useState(false);
   const [isUpdateModalOpened, setIsUpdateModalOpened] = useState(false);
-  const [selectedTaskData, setSelectedTaskData] = useState<Task | null>(null);
-  const [selectedId, setSelectedId] = useState(0);
+  const [isDetailModalOpened, setIsDetailModalOpened] = useState(false);
+  const [selectedTaskData, setSelectedTaskData] = useState<TaskList | null>(null);
   const tasksPerPage = 5;
 
   const fetchTasks = async () => {
@@ -38,15 +38,16 @@ const TasksPage = () => {
     }
   };
 
-  const handleNewData = (newTask: Task) => {
+  const handleNewData = (newTask: TaskList) => {
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
   const handleUpdate = (taskId: number) => {
     const selectedData = tasks.find((x) => x.id == taskId);
+
+    console.log('updatee data', selectedData)
     setSelectedTaskData(selectedData || null);
     setIsUpdateModalOpened(true);
-    setSelectedId(taskId);
   };
 
   // console.log("selectedId", selectedId);
@@ -84,9 +85,9 @@ const TasksPage = () => {
   };
 
   const handleDetail = (taskId: number) => {
-    console.log(`View details for task with ID: ${taskId}`);
-    const selectedData = tasks.filter((x) => x.id === taskId);
-    console.log("selected data", selectedData);
+    const selectedData = tasks.find((x) => x.id === taskId);
+    setIsDetailModalOpened(true);
+    console.log("detail data:", selectedData);
   };
 
   const handleDelete = async (taskId: number) => {
@@ -104,7 +105,7 @@ const TasksPage = () => {
     }
   };
 
-  const handleUpdateData = (id: number, updatedTask: Task) => {
+  const handleUpdateData = (id: number, updatedTask: TaskList) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) => (task.id === id ? updatedTask : task))
     );
