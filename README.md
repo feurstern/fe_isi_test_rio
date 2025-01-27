@@ -1,4 +1,4 @@
-# Laravel x NextJS x Postgres
+![image](https://github.com/user-attachments/assets/2c952671-249d-4887-af54-2eabb5b7d12f)# Laravel x NextJS x Postgres
 
 This README provides detailed instructions to install, build, and run the backend project using Docker and locally.
 
@@ -11,6 +11,7 @@ Before starting, ensure you have the following installed:
 - [Docker](https://docs.docker.com/get-docker/) (version 20.10 or higher recommended)
 - [Docker Compose](https://docs.docker.com/compose/install/) (version 1.29 or higher recommended)
 - Bun/Node (if running locally) - [Download bun](https://bun.sh/docs/installation)
+ PHP - [Dowload PHP][https://www.php.net/downloads.php]
 
 ---
 
@@ -157,6 +158,39 @@ E
    - Ensure you have Go installed and the required version is being used.
 
 
+
+
+---
+#A PI :
+1. **Login**
+ Post ->  http://127.0.0.1:8000/api/login
+
+
+![image](https://github.com/user-attachments/assets/8fcc8b15-db66-4784-ae76-1fcdb2223cdb)
+
+2. **Create Task**
+
+   Post -> http://127.0.0.1:8000/api/task/create
+
+![image](https://github.com/user-attachments/assets/3a778b7b-43ce-473d-8b07-4162481894c3)
+
+3.  **Task list**
+
+   Get-> 
+
+   ![image](https://github.com/user-attachments/assets/5347c448-87c6-4e77-89be-bc2f5c2ed281)
+
+4. **Delete task**
+    post -> http://127.0.0.1:8000/api/task/delete/13
+   ![image](https://github.com/user-attachments/assets/fcb7828d-ed5f-487a-875b-834e8dca7aa4)
+
+6. **update**
+  Post -> http://127.0.0.1:8000/api/task/update/6
+   ![image](https://github.com/user-attachments/assets/f205c3cb-c4af-4c2e-a157-175495bb9b64)
+
+
+---
+#Screenshot
 
 
 ![image](https://github.com/user-attachments/assets/33edcc45-7c2e-4260-b133-92a4b9897dc5)
