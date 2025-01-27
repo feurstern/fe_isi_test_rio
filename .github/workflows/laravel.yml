@@ -47,7 +47,7 @@ jobs:
     # Install PHP dependencies
     - name: Install Dependencies
       working-directory: ./backend
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      run: composer install --no-ansi --no-interaction --prefer-dist
 
     # Generate application key
     - name: Generate Key
@@ -59,8 +59,8 @@ jobs:
       working-directory: ./backend
       run: chmod -R 777 storage bootstrap/cache
 
-    # Configure the database
-    - name: Configure Database
+    # Run database migrations
+    - name: Run Migrations
       working-directory: ./backend
       env:
         DB_CONNECTION: pgsql
@@ -69,8 +69,7 @@ jobs:
         DB_DATABASE: laravel_test
         DB_USERNAME: postgres
         DB_PASSWORD: password
-      run: |
-        php artisan migrate --force
+      run: php artisan migrate --force
 
     # Run Laravel tests
     - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
