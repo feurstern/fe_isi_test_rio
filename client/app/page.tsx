@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import withAuth from "./hoc/withAuth";
 
 const Home  = () =>  {
   const user = JSON.parse(localStorage.getItem("user") || "{}");

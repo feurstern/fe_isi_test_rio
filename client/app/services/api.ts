@@ -1,5 +1,5 @@
 import api from "../utils/api";
-import { TaskPayload } from "../models";
+import { Task, TaskPayload } from "../models";
 export const taskList = async () => {
   try {
     const res = await api.get("/task/list");
@@ -27,7 +27,6 @@ export const taskDelete = async (id: number) => {
   }
 };
 
-
 export const taskUpdate = async (id: number, newData: TaskPayload) => {
   try {
     const res = await api.post(`/task/update/${id}`, newData);
@@ -43,5 +42,23 @@ export const teamList = async () => {
     return res.data;
   } catch (error) {
     console.log("error during retrieving the user taeam data", error);
+  }
+};
+
+export const taskDetail = async (id: number) => {
+  try {
+    const res = await api.get(`/task/detail/${id}`);
+    return res.data;
+  } catch (error) {
+    console.log("error during the displaying the detail", error);
+  }
+};
+
+export const statusList = async () => {
+  try {
+    const res = await api.get("/status/list");
+    return res.data;
+  } catch (error) {
+    console.log("error during retrieving list:", error);
   }
 };

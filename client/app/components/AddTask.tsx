@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { progress } from "../constant";
-import { teamList, taskSubmit } from "../services/api";
+import { teamList, taskSubmit, statusList } from "../services/api";
 import { Task, Team } from "../models";
 
 type createTaskModalProps = {
@@ -33,11 +33,17 @@ const AddTask: React.FC<createTaskModalProps> = ({
     } catch (error) {}
   };
 
+  const fetchStatusList = async () => {
+    try {
+      const res = await statusList();
+      setStatus(res);
+    } catch (error) {}
+  };
+
   useEffect(() => {
     fetchTeamList();
+    fetchStatusList();
   }, []);
-
-  
 
   const submitData = async (e: React.FormEvent) => {
     e.preventDefault();

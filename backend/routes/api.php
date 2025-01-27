@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\auth\AuthController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -20,6 +21,10 @@ Route::middleware(["auth:api", 'throttle:60,1'])->prefix("task")->group(function
 
 Route::middleware(['auth:api', 'throttle:60,1'])->prefix("user")->group(function () {
     Route::get("/team-role", [UserController::class, "getTeamRole"])->name('user.team-role');
+});
+
+Route::middleware(['auth:api'])->prefix("status")->group(function () {
+    Route::get("/list", [StatusController::class, "index"]);
 });
 
 Route::post("/login", [AuthController::class, 'login'])->name("login");

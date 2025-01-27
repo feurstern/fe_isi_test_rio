@@ -1,8 +1,8 @@
 import React from "react";
-import { Task } from "../models";
+import { Task, TaskList } from "../models";
 
 type TaskCardProps = {
-  taskListDataProps: Task[];
+  taskListDataProps: TaskList[];
   onEdit: (taskId: number) => void;
   onDelete: (taskId: number) => void;
   onDetail: (taskId: number) => void;
@@ -28,7 +28,9 @@ const TaskCard: React.FC<TaskCardProps> = ({
           <h2 className="text-lg font-semibold">
             {task.title}{" "}
             <span
-              className={`${checkStatusColour(task.status_id)} text-white rounded px-4`}
+              className={`${checkStatusColour(
+                task.status_id
+              )} text-white rounded px-4`}
             >
               {checkStatus(task.status_id)}
             </span>
@@ -37,7 +39,14 @@ const TaskCard: React.FC<TaskCardProps> = ({
           <p className="text-sm text-gray-500">
             Created At: {new Date(task.created_at).toLocaleDateString()}
           </p>
-        
+
+          <p className="text-sm text-gray-500">
+            Created by : {task.created_by_name}
+          </p>
+          <p className="text-sm text-gray-500">
+            Assigned to : {task.assigned_to_name}
+          </p>
+
           <div className="mt-4 flex space-x-4">
             <button
               onClick={() => onEdit(task.id)}
@@ -45,12 +54,12 @@ const TaskCard: React.FC<TaskCardProps> = ({
             >
               Edit
             </button>
-            <button
+            {/* <button
               onClick={() => onDetail(task.id)}
               className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
             >
               Detail
-            </button>
+            </button> */}
             <button
               onClick={() => onDelete(task.id)}
               className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"

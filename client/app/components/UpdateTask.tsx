@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Task, Team } from "../models";
+import { Task, TaskList, Team } from "../models";
 import { progress } from "../constant";
 import { teamList, taskUpdate } from "../services/api";
 
 type updateTaskModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  selectedTaskDataProps: Task | null;
-  onUpdateTaskProps: (id: number, task: Task) => void;
+  selectedTaskDataProps: TaskList | null;
+  onUpdateTaskProps: (id: number, task: TaskList) => void;
 };
 
 const UpdateTask: React.FC<updateTaskModalProps> = ({
@@ -50,6 +50,7 @@ const UpdateTask: React.FC<updateTaskModalProps> = ({
   const handleUpdateTask = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      // alert("clicked");
       const payload = {
         id: userId,
         title: title,
@@ -57,14 +58,16 @@ const UpdateTask: React.FC<updateTaskModalProps> = ({
         status_id: status.toString(),
         assigned_to: assignedTo.toString(),
       };
-      alert('clicked')
+      console.log("payload", payload);
       const res = await taskUpdate(taskId, payload);
       if (res.success) {
         alert(res.message);
         onUpdateTaskProps(taskId, res.data);
         onClose();
       }
-    } catch (error) {}
+    } catch (error) {
+      alert(error);
+    }
 
     // console.log("update payload", payload);
   };

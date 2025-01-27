@@ -17,7 +17,9 @@ export type TaskList = {
   title: string;
   description: string;
   status: string;
-  create_by_nane: string;
+  status_id: number;
+  assigned_to: number;
+  created_by_name: string;
   create_by: number;
   update_by: number | null;
   delete_by: number | null;
@@ -42,4 +44,12 @@ export interface TaskPayload {
   description: string;
   status_id: string;
   assigned_to: string;
+}
+
+export interface TaskDataCarier {
+  id: string;
+  title: string;
+  description: string;
+  status: string;
+  assigned_to_name: string;
 }
