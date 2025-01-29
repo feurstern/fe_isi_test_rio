@@ -26,3 +26,13 @@ export const logout = async () => {
     console.log("error during logout");
   }
 };
+
+export const loginWithGoogle = async () => {
+  try {
+    const res = await api.get("/auth/google");
+
+    return res.data;
+  } catch (error) {
+    alert("error when trying to connect witg google");
+  }
+};

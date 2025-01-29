@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\auth\AuthController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -30,3 +31,9 @@ Route::middleware(['auth:api'])->prefix("status")->group(function () {
 Route::post("/login", [AuthController::class, 'login'])->name("login");
 Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 Route::get("/create", [UserController::class, "create"]);
+
+Route::middleware('web')->group(function () {
+});
+
+Route::get("/auth/google/callback", [GoogleAuthController::class, "handleCallbackGoogle"])->name("google.callback");
+Route::get("/auth/google", [GoogleAuthController::class, "redirect"])->name("google.auth");

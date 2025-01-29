@@ -131,17 +131,15 @@ class TaskController extends Controller
         $oldData->updated_at = now();
 
         $save = $oldData->save();
- 
+
         $data = $oldData;
 
         $created_by = User::find($oldData->create_by);
         $assigned_user = User::find($newData['assigned_to']);
 
         $data->update_by = $user->name;
-        $data->create_by = $created_by->name;
+        $data->created_by_name = $created_by->name;
         $data->assigned_to_name  = $assigned_user->name;
-
-
 
         return $save
             ? response()->json(["success" => $save, "message" => "Data has been edited succesfully", "data" => $data])
