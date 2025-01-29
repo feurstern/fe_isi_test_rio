@@ -2,14 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { login } from "../services/auth";
+import { login, loginWithGoogle } from "../services/auth";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [error, setError] = useState("");
   const router = useRouter();
-
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,6 +21,18 @@ const LoginPage = () => {
       }
     } catch (error: any) {
       alert("failed");
+    }
+  };
+
+  const handleLoginWithGoogle = async () => {
+    try {
+      const res = await loginWithGoogle();
+
+      if (res.success) {
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      alert("error when hand;ing the login")
     }
   };
 
@@ -74,11 +85,13 @@ const LoginPage = () => {
           <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg transition-colors">
             Login
           </button>
+
+          <button onClick={handleLoginWithGoogle} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition-colors">
+            Login with Google
+          </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-gray-600">
-      
-        </div>
+        <div className="mt-6 text-center text-sm text-gray-600"></div>
       </div>
     </div>
   );

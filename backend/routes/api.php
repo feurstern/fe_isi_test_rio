@@ -32,5 +32,8 @@ Route::post("/login", [AuthController::class, 'login'])->name("login");
 Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 Route::get("/create", [UserController::class, "create"]);
 
+Route::middleware('web')->group(function () {
+});
+
+Route::get("/auth/google/callback", [GoogleAuthController::class, "handleCallbackGoogle"])->name("google.callback");
 Route::get("/auth/google", [GoogleAuthController::class, "redirect"])->name("google.auth");
-Route::get("auth/google/callback", [GoogleAuthController::class, "handleCallbackGoogl"])->name("google.callback");
