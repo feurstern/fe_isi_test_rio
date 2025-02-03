@@ -24,7 +24,9 @@ const TasksPage = () => {
   const [isCreateModalOpened, setIsCreateModalOpened] = useState(false);
   const [isUpdateModalOpened, setIsUpdateModalOpened] = useState(false);
   const [isDetailModalOpened, setIsDetailModalOpened] = useState(false);
-  const [selectedTaskData, setSelectedTaskData] = useState<TaskList | null>(null);
+  const [selectedTaskData, setSelectedTaskData] = useState<TaskList | null>(
+    null
+  );
   const tasksPerPage = 5;
 
   const fetchTasks = async () => {
@@ -38,14 +40,14 @@ const TasksPage = () => {
     }
   };
 
-  const handleNewData = (newTask: TaskList) => {
+const handleNewData = (newTask: TaskList) => {
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
   const handleUpdate = (taskId: number) => {
     const selectedData = tasks.find((x) => x.id == taskId);
 
-    console.log('updatee data', selectedData)
+    console.log("updatee data", selectedData);
     setSelectedTaskData(selectedData || null);
     setIsUpdateModalOpened(true);
   };

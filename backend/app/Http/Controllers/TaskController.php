@@ -55,8 +55,11 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        $data  = $request->all();
 
+
+        $data  = $request->all();
+        
+        
         // $user  = Auth::user();
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -64,11 +67,12 @@ class TaskController extends Controller
             return response()->json(["message" => "invalid credentialss"]);
         }
 
-        // dd($data);
 
+        // return $data;
         $task = new Task();
 
         $assigned_user = User::find($data['assigned_to']);
+        
 
         $task->title = $data['title'];
         $task->description = $data['description'];

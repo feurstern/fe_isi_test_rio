@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { progress } from "../constant";
 import { teamList, taskSubmit, statusList } from "../services/api";
-import { Task, Team } from "../models";
+import { Task, TaskList, Team } from "../models";
 
 type createTaskModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onNewTaskProps: (task: Task) => void;
+  onNewTaskProps: (task: TaskList) => void;
 };
 
 const AddTask: React.FC<createTaskModalProps> = ({
@@ -22,6 +22,7 @@ const AddTask: React.FC<createTaskModalProps> = ({
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
   const [assignedTo, setAssignedTo] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const id: string = user?.user?.id;
@@ -52,7 +53,7 @@ const AddTask: React.FC<createTaskModalProps> = ({
         id: id,
         title: title,
         description: description,
-        status_id: status,
+        status_id: selectedStatus,
         assigned_to: assignedTo,
       };
       const res = await taskSubmit(payload);
@@ -105,7 +106,10 @@ const AddTask: React.FC<createTaskModalProps> = ({
             <label htmlFor="progressStatus" className="block font-medium mb-1">
               Progress Status :
             </label>
-            <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+            >
               <option disabled>select</option>
               {progress.map((x, i) => (
                 <option key={`${i}`} value={`${x.id}`}>
@@ -132,6 +136,7 @@ const AddTask: React.FC<createTaskModalProps> = ({
               ))}
             </select>
           </div>
+          selected STATUS {selectedStatus}
           <div className="flex justify-end space-x-2">
             <button
               type="button"
