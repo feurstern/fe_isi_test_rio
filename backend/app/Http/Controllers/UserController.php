@@ -21,6 +21,12 @@ class UserController extends Controller
 
     function getTeamRole()
     {
-        return User::whereNull('deleted_at')->where("role_id", 2)->get();
+        $data = User::whereNull('deleted_at')->where("role_id", 2)->get();
+
+        if (!$data) {
+            return response()->json(["message" => "no team role found!", "success" => false]);
+        }
+
+        return response()->json(["success" => true, "data" => $data]);
     }
 }

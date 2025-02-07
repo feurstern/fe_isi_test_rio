@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,14 @@ class CheckRoleMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-    
+
+        $role = User::find($request->id);
+
+        if ($role->role != 1) {
+            
+            return response()->json(["message" => "Unauthorized access", "success" => false]);
+        }
+
         return $next($request);
     }
 }

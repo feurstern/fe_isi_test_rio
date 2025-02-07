@@ -53,3 +53,23 @@ export interface TaskDataCarier {
   status: string;
   assigned_to_name: string;
 }
+
+export type AddTaskState = {
+  title: string;
+  team: Team[];
+  description: string;
+  assignedTo: string;
+  selectedStatusId: string;
+  status: string;
+};
+
+export type AddTaskActions = {
+  type:
+    | "SET_TITLE"
+    | "SET_Team"
+    | "SET_DESCRIPTION"
+    | "SET_ASSIGNED_TO"
+    | "SET_STATUS"
+    | "SET_SELECTED_STATUS_ID";
+  payload?: string | TaskList | Team | [];
+};

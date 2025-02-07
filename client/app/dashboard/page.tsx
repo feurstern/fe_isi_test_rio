@@ -3,7 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { taskList, taskDelete } from "../services/api";
 import { Task, TaskList } from "../models";
-import { TaskCard, Navbar, AddTask, UpdateTask } from "../components";
+import {
+  TaskCard,
+  Navbar,
+  AddTask,
+  UpdateTask,
+  AddTaskReducer,
+} from "../components";
 import { useRouter } from "next/navigation";
 
 const TasksPage = () => {
@@ -40,7 +46,7 @@ const TasksPage = () => {
     }
   };
 
-const handleNewData = (newTask: TaskList) => {
+  const handleNewData = (newTask: TaskList) => {
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
@@ -179,7 +185,13 @@ const handleNewData = (newTask: TaskList) => {
           </div>
         )}
 
-        <AddTask
+        {/* <AddTask
+          onNewTaskProps={handleNewData}
+          isOpen={isCreateModalOpened}
+          onClose={handleCloseModal}
+        /> */}
+
+        <AddTaskReducer
           onNewTaskProps={handleNewData}
           isOpen={isCreateModalOpened}
           onClose={handleCloseModal}
